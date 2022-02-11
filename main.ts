@@ -7,6 +7,7 @@ function guessLetter () {
         for (let value of GuessWord) {
             if (value == String.fromCharCode(InputPosition + 67)) {
                 Dashes[LetterIndex].setImage(LetterSprites[InputPosition + 2].image)
+                GuessDone()
             }
             LetterIndex += 1
         }
@@ -17,7 +18,7 @@ function guessLetter () {
 }
 function RenderInput () {
     hideAllInput()
-    InputOffset = 30
+    InputOffset = 40
     for (let LetterIndex = 0; LetterIndex <= 4; LetterIndex++) {
         if (LetterIndex + InputPosition >= 0 && LetterIndex + InputPosition < LetterSprites.length) {
             LetterSprites[LetterIndex + InputPosition].setPosition(InputOffset, 110)
@@ -28,7 +29,7 @@ function RenderInput () {
                 LetterSprites[LetterIndex + InputPosition].image.replace(10, 6)
             }
         }
-        InputOffset += 16
+        InputOffset += 20
     }
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -93,7 +94,28 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function initRound () {
-    Words = ["SPEAR", "COOK", "PYTHON"]
+    sprites.destroyAllSpritesOfKind(SpriteKind.Letter)
+    InputPosition = 0
+    Words = [
+    "SPEAR",
+    "COOK",
+    "PYTHON",
+    "ORGANIZATION",
+    "AMONG US",
+    "SPIDER-MAN",
+    "STRAWBERRY",
+    "COFFEE",
+    "PLUMBUCKET",
+    "VTUBER",
+    "HENTAI",
+    "ANIME",
+    "VALORANT",
+    "TRUEXPIXELS",
+    "RUNESCAPE",
+    "WORDLE",
+    "SQUABBLE",
+    "STATEMENT"
+    ]
     GuessWord = Words._pickRandom()
     Dashes = []
     for (let value3 of GuessWord) {
@@ -108,11 +130,11 @@ info.onLifeZero(function () {
     game.over(false)
 })
 function RenderLetters () {
-    LetterOffset = 30
+    LetterOffset = scene.screenWidth() / 1.82 - GuessWord.length * 7
     for (let value4 of Dashes) {
         value4.setPosition(LetterOffset, 78)
         value4.setScale(2, ScaleAnchor.Middle)
-        LetterOffset += 16
+        LetterOffset += 14
     }
 }
 function GuessDone () {
