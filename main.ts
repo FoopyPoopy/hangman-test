@@ -1,13 +1,39 @@
 namespace SpriteKind {
     export const Letter = SpriteKind.create()
 }
+function guessLetter () {
+    if (GuessWord.includes(String.fromCharCode(InputPosition + 67))) {
+        LetterIndex = 0
+        for (let value of GuessWord) {
+            if (value == String.fromCharCode(InputPosition + 67)) {
+                Dashes[LetterIndex].setImage(LetterSprites[InputPosition + 2].image)
+            }
+            LetterIndex += 1
+        }
+    } else {
+        info.changeLifeBy(-1)
+        scene.cameraShake(4, 200)
+    }
+}
 function RenderInput () {
+    hideAllInput()
     InputOffset = 30
-    for (let index = 0; index <= 4; index++) {
-        LetterSprites[index + InputPosition].setPosition(InputOffset, 90)
+    for (let LetterIndex = 0; LetterIndex <= 4; LetterIndex++) {
+        if (LetterIndex + InputPosition >= 0 && LetterIndex + InputPosition < LetterSprites.length) {
+            LetterSprites[LetterIndex + InputPosition].setPosition(InputOffset, 110)
+            LetterSprites[LetterIndex + InputPosition].setScale(2, ScaleAnchor.Middle)
+            if (LetterIndex == 2) {
+                LetterSprites[LetterIndex + InputPosition].image.replace(6, 10)
+            } else {
+                LetterSprites[LetterIndex + InputPosition].image.replace(10, 6)
+            }
+        }
         InputOffset += 16
     }
 }
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    guessLetter()
+})
 function hideAllInput () {
     for (let value of LetterSprites) {
         value.setPosition(-10, -10)
@@ -15,53 +41,63 @@ function hideAllInput () {
 }
 function Alphabet () {
     Letters = [
-    assets.image`Letter A`,
-    assets.image`Letter B`,
-    assets.image`Letter C`,
-    assets.image`Letter D`,
-    assets.image`Letter E`,
-    assets.image`Letter F`,
-    assets.image`Letter G`,
-    assets.image`Letter H`,
-    assets.image`Letter I`,
-    assets.image`Letter J`,
-    assets.image`Letter K`,
-    assets.image`Letter L`,
-    assets.image`Letter M`,
-    assets.image`Letter N`,
-    assets.image`Letter O`,
-    assets.image`Letter P`,
-    assets.image`Letter Q`,
-    assets.image`Letter R`,
-    assets.image`Letter S`,
-    assets.image`Letter T`,
-    assets.image`Letter U`,
-    assets.image`Letter V`,
-    assets.image`Letter W`,
-    assets.image`Letter X`,
-    assets.image`Letter Y`,
-    assets.image`Letter Z`
+    assets.image`myImage`,
+    assets.image`b`,
+    assets.image`myImage0`,
+    assets.image`myImage1`,
+    assets.image`myImage2`,
+    assets.image`myImage3`,
+    assets.image`myImage4`,
+    assets.image`myImage5`,
+    assets.image`myImage6`,
+    assets.image`myImage7`,
+    assets.image`myImage8`,
+    assets.image`myImage9`,
+    assets.image`myImage10`,
+    assets.image`myImage11`,
+    assets.image`myImage12`,
+    assets.image`myImage13`,
+    assets.image`myImage14`,
+    assets.image`myImage15`,
+    assets.image`myImage16`,
+    assets.image`myImage17`,
+    assets.image`myImage18`,
+    assets.image`myImage19`,
+    assets.image`myImage20`,
+    assets.image`myImage21`,
+    assets.image`myImage22`,
+    assets.image`myImage23`
     ]
     LetterSprites = []
-    for (let value of Letters) {
-        LetterSprites.push(sprites.create(value, SpriteKind.Letter))
+    for (let value2 of Letters) {
+        LetterSprites.push(sprites.create(value2, SpriteKind.Letter))
     }
     hideAllInput()
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    InputPosition += -1
-    RenderInput()
+    while (controller.left.isPressed()) {
+        if (InputPosition > -2) {
+            InputPosition += -1
+            RenderInput()
+        }
+        pause(250)
+    }
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    InputPosition += 1
-    RenderInput()
+    while (controller.right.isPressed()) {
+        if (InputPosition < 23) {
+            InputPosition += 1
+            RenderInput()
+        }
+        pause(250)
+    }
 })
 function initRound () {
     Words = ["SPEAR", "COOK", "PYTHON"]
     GuessWord = Words._pickRandom()
     Dashes = []
-    for (let value of GuessWord) {
-        Dashes.push(sprites.create(assets.image`Input Letter Position`, SpriteKind.Letter))
+    for (let value3 of GuessWord) {
+        Dashes.push(sprites.create(assets.image`Dash`, SpriteKind.Letter))
     }
     info.setLife(6)
     RenderLetters()
@@ -73,19 +109,34 @@ info.onLifeZero(function () {
 })
 function RenderLetters () {
     LetterOffset = 30
-    for (let value of Dashes) {
-        value.setPosition(LetterOffset, 78)
+    for (let value4 of Dashes) {
+        value4.setPosition(LetterOffset, 78)
+        value4.setScale(2, ScaleAnchor.Middle)
         LetterOffset += 16
     }
 }
+function GuessDone () {
+    IncorrectLetters = 0
+    for (let value of Dashes) {
+        if (value.image.equals(assets.image`Dash`)) {
+            IncorrectLetters += 1
+        }
+    }
+    if (IncorrectLetters == 0) {
+        info.changeScoreBy(1)
+        initRound()
+    }
+}
+let IncorrectLetters = 0
 let LetterOffset = 0
-let Dashes: Sprite[] = []
-let GuessWord = ""
 let Words: string[] = []
 let Letters: Image[] = []
-let InputPosition = 0
-let LetterSprites: Sprite[] = []
 let InputOffset = 0
+let LetterSprites: Sprite[] = []
+let Dashes: Sprite[] = []
+let LetterIndex = 0
+let InputPosition = 0
+let GuessWord = ""
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999

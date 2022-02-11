@@ -1,81 +1,144 @@
-def on_a_pressed():
-    game.splash(Letters[randint(0, 10)])
-    Alphabet()
-controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
-
+@namespace
+class SpriteKind:
+    Letter = SpriteKind.create()
+def RenderInput():
+    global InputOffset
+    InputOffset = 30
+    for index in range(5):
+        LetterSprites[index + InputPosition].set_position(InputOffset, 90)
+        InputOffset += 16
+def hideAllInput():
+    for value in LetterSprites:
+        value.set_position(-10, -10)
 def Alphabet():
-    global Letters
+    global Letters, LetterSprites
     Letters = [assets.image("""
-            Letter A
+            myImage
         """),
         assets.image("""
-            Letter B
+                    b
+                """),assets.image("""
+            myImage0
         """),
         assets.image("""
-            Letter C
+            myImage1
         """),
         assets.image("""
-            Letter D
+            myImage2
         """),
         assets.image("""
-            Letter E
+            myImage3
         """),
-        img("""
-            . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . .
+        assets.image("""
+            myImage4
         """),
-        img("""
-            . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . .
+        
+        assets.image("""
+            myImage5
         """),
-        img("""
-            . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . .
+        assets.image("""
+            myImage6
+        """),
+        assets.image("""
+            myImage7
+        """),
+        assets.image("""
+            myImage8
+        """),
+        assets.image("""
+            myImage9
+        """),
+        assets.image("""
+            myImage10
+        """),
+        assets.image("""
+            myImage11
+        """),
+        assets.image("""
+            myImage12
+        """),
+        assets.image("""
+            myImage13
+        """),
+        assets.image("""
+            myImage14
+        """),
+        assets.image("""
+            myImage15
+        """),
+        assets.image("""
+            myImage16
+        """),
+        assets.image("""
+            myImage17
+        """),
+        assets.image("""
+            myImage18
+        """),
+        assets.image("""
+            myImage19
+        """),
+        assets.image("""
+            myImage20
+        """),
+        assets.image("""
+            myImage21
+        """),
+        assets.image("""
+            myImage22
+        """),
+        assets.image("""
+            myImage23
         """)]
+    LetterSprites = []
+    for value2 in Letters:
+        LetterSprites.append(sprites.create(value2, SpriteKind.Letter))
+    hideAllInput()
+
+def on_left_pressed():
+    global InputPosition
+    InputPosition += -1
+    RenderInput()
+controller.left.on_event(ControllerButtonEvent.PRESSED, on_left_pressed)
+
+def on_right_pressed():
+    global InputPosition
+    InputPosition += 1
+    RenderInput()
+controller.right.on_event(ControllerButtonEvent.PRESSED, on_right_pressed)
+
+def initRound():
+    global Words, GuessWord, Dashes
+    Words = ["SPEAR", "COOK", "PYTHON"]
+    GuessWord = Words._pick_random()
+    Dashes = []
+    for value3 in GuessWord:
+        Dashes.append(sprites.create(assets.image("""
+            myImage0
+        """), SpriteKind.Letter))
+    info.set_life(6)
+    RenderLetters()
+    Alphabet()
+    RenderInput()
+
+def on_life_zero():
+    game.over(False)
+info.on_life_zero(on_life_zero)
+
+def RenderLetters():
+    global LetterOffset
+    LetterOffset = 30
+    for value4 in Dashes:
+        value4.set_position(LetterOffset, 78)
+        LetterOffset += 16
+LetterOffset = 0
+Dashes: List[Sprite] = []
+GuessWord = ""
+Words: List[str] = []
 Letters: List[Image] = []
-InputArea: Sprite = None
+InputPosition = 0
+LetterSprites: List[Sprite] = []
+InputOffset = 0
 scene.set_background_image(img("""
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
         9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -198,13 +261,5 @@ scene.set_background_image(img("""
         dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
         dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 """))
-Words = ["SPEAR", "COOK", "PYTHON"]
-Word = Words._pick_random()
-for WordLength in range(5):
-    InputArea = sprites.create(assets.image("""
-            Input Letter Position
-        """),
-        SpriteKind.player)
-    InputArea.set_position(30, 90)
+initRound()
 info.set_score(0)
-info.set_life(6)

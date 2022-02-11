@@ -3,16 +3,6 @@ namespace myImages {
 
     helpers._registerFactory("image", function(name: string) {
         switch(helpers.stringTrim(name)) {
-            case "?#hss8:68xFggc":
-            case "b":return img`
-6 6 6 6 . 
-6 . . . 6 
-6 . . . 6 
-6 6 6 6 . 
-6 . . . 6 
-6 . . . 6 
-6 6 6 6 . 
-`;
             case "image1":
             case "myImage":return img`
 . 6 6 6 . 
@@ -22,16 +12,6 @@ namespace myImages {
 6 . . . 6 
 6 . . . 6 
 6 . . . 6 
-`;
-            case "image2":
-            case "myImage0":return img`
-. 6 6 6 . 
-6 . . . 6 
-6 . . . . 
-6 . . . . 
-6 . . . . 
-6 . . . 6 
-. 6 6 6 . 
 `;
             case "image3":
             case "myImage1":return img`
@@ -261,6 +241,36 @@ namespace myImages {
 . . 6 . . 
 . 6 . . . 
 6 . . . . 
+6 6 6 6 6 
+`;
+            case "?#hss8:68xFggc":
+            case "b":return img`
+6 6 6 6 . 
+6 . . . 6 
+6 . . . 6 
+6 6 6 6 . 
+6 . . . 6 
+6 . . . 6 
+6 6 6 6 . 
+`;
+            case "image2":
+            case "myImage0":return img`
+. 6 6 6 . 
+6 . . . 6 
+6 . . . . 
+6 . . . . 
+6 . . . . 
+6 . . . 6 
+. 6 6 6 . 
+`;
+            case "image26":
+            case "Dash":return img`
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
 6 6 6 6 6 
 `;
         }
