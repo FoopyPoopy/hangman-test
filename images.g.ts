@@ -273,6 +273,26 @@ namespace myImages {
 . . . . . 
 6 6 6 6 6 
 `;
+            case "image27":
+            case "Hyphen":return img`
+. . . . . 
+. . . . . 
+. . . . . 
+. 6 6 6 . 
+. . . . . 
+. . . . . 
+. . . . . 
+`;
+            case "image28":
+            case "space":return img`
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+. . . . . 
+`;
         }
         return null;
     })

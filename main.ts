@@ -119,7 +119,13 @@ function initRound () {
     GuessWord = Words._pickRandom()
     Dashes = []
     for (let value3 of GuessWord) {
-        Dashes.push(sprites.create(assets.image`Dash`, SpriteKind.Letter))
+        if (value3 == " ") {
+            Dashes.push(sprites.create(assets.image`space`, SpriteKind.Letter))
+        } else if (value3 == "-") {
+            Dashes.push(sprites.create(assets.image`Hyphen`, SpriteKind.Letter))
+        } else {
+            Dashes.push(sprites.create(assets.image`Dash`, SpriteKind.Letter))
+        }
     }
     info.setLife(6)
     RenderLetters()

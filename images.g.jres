@@ -134,6 +134,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "Dash"
     },
+    "image27": {
+        "data": "hwQFAAcAAAAAAAAAAGAAAABgAAAAYAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Hyphen"
+    },
+    "image28": {
+        "data": "hwQFAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "space"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
