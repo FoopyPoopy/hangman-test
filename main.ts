@@ -1,5 +1,7 @@
 namespace SpriteKind {
     export const Letter = SpriteKind.create()
+    export const HangPerson = SpriteKind.create()
+    export const HangPole = SpriteKind.create()
 }
 function guessLetter () {
     if (GuessWord.includes(String.fromCharCode(InputPosition + 67))) {
@@ -12,7 +14,8 @@ function guessLetter () {
             LetterIndex += 1
         }
     } else {
-        info.changeLifeBy(-1)
+        health += -1
+        drawHangman()
         scene.cameraShake(4, 200)
     }
 }
@@ -127,20 +130,36 @@ function initRound () {
             Dashes.push(sprites.create(assets.image`Dash`, SpriteKind.Letter))
         }
     }
-    info.setLife(6)
+    health = 6
+    drawHangman()
     RenderLetters()
     Alphabet()
     RenderInput()
 }
-info.onLifeZero(function () {
-    game.over(false)
-})
 function RenderLetters () {
     LetterOffset = scene.screenWidth() / 1.82 - GuessWord.length * 7
     for (let value4 of Dashes) {
-        value4.setPosition(LetterOffset, 78)
+        value4.setPosition(LetterOffset, 85)
         value4.setScale(2, ScaleAnchor.Middle)
         LetterOffset += 14
+    }
+}
+function drawHangman () {
+    if (health == 6) {
+        HangPlayer.setImage(assets.image`Lives6`)
+    } else if (health == 5) {
+        HangPlayer.setImage(assets.image`Lives5`)
+    } else if (health == 4) {
+        HangPlayer.setImage(assets.image`Lives4`)
+    } else if (health == 3) {
+        HangPlayer.setImage(assets.image`Lives3`)
+    } else if (health == 2) {
+        HangPlayer.setImage(assets.image`Lives2`)
+    } else if (health == 1) {
+        HangPlayer.setImage(assets.image`Lives1`)
+    } else {
+        HangPlayer.setImage(assets.image`Lives0`)
+        game.over(false)
     }
 }
 function GuessDone () {
@@ -160,11 +179,13 @@ let LetterOffset = 0
 let Words: string[] = []
 let Letters: Image[] = []
 let InputOffset = 0
+let health = 0
 let LetterSprites: Sprite[] = []
 let Dashes: Sprite[] = []
 let LetterIndex = 0
 let InputPosition = 0
 let GuessWord = ""
+let HangPlayer: Sprite = null
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -287,5 +308,8 @@ scene.setBackgroundImage(img`
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     `)
+HangPlayer = sprites.create(assets.image`HangPerson`, SpriteKind.HangPole)
+HangPlayer.setScale(3, ScaleAnchor.Middle)
+HangPlayer.setPosition(30, 40)
 initRound()
 info.setScore(0)
