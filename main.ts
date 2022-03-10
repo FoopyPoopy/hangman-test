@@ -117,7 +117,9 @@ function initRound () {
     "RUNESCAPE",
     "WORDLE",
     "SQUABBLE",
-    "STATEMENT"
+    "STATEMENT",
+    "ELDEN RING",
+    "OREGON"
     ]
     GuessWord = Words._pickRandom()
     Dashes = []
